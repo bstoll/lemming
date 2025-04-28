@@ -8,7 +8,6 @@ go_library(
     deps = [
         "//gnmi/fakedevice",
         "@com_github_golang_glog//:glog",
-        "@com_github_openconfig_gnmi//proto/gnmi",
         "@com_github_openconfig_gnoi//bgp",
         "@com_github_openconfig_gnoi//cert",
         "@com_github_openconfig_gnoi//diag",
@@ -22,6 +21,7 @@ go_library(
         "@com_github_openconfig_gnoi//system",
         "@com_github_openconfig_gnoi//wavelength_router",
         "@com_github_openconfig_ygnmi//ygnmi",
+        "@openconfig_gnmi//proto/gnmi",
         "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//codes",
         "@org_golang_google_grpc//status",

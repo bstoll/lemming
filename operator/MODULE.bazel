@@ -1,0 +1,25 @@
+module(
+    name = "openconfig_lemming_operator",
+    version = "0.2.0",
+)
+
+bazel_dep(name = "gazelle", version = "0.41.0", repo_name = "bazel_gazelle")
+bazel_dep(name = "rules_go", version = "0.51.0", repo_name = "io_bazel_rules_go")
+bazel_dep(name = "rules_oci", version = "2.2.5")
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+
+go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.24.2")
+
+go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
+go_deps.from_file(go_mod = "//:go.mod")
+use_repo(go_deps, "com_github_google_go_cmp", "io_k8s_api", "io_k8s_apimachinery", "io_k8s_client_go", "io_k8s_sigs_controller_runtime", "io_k8s_utils")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "debian_bookworm",
+    digest = "sha256:a92ed51e0996d8e9de041ca05ce623d2c491444df6a535a566dabd5cb8336946",  # bookworm as of 06/20/24
+    image = "debian",
+    platforms = ["linux/amd64"],
+)
+use_repo(oci, "debian_bookworm", "debian_bookworm_linux_amd64")
